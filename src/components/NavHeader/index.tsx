@@ -1,7 +1,10 @@
 import Image from "next/image";
 import SponsorGasLogo from "../../../public/sponsor_gas.png" 
+import { getCurrentUser } from "@/lib/session";
+import LoginWithGithub from "../LoginWithGithub";
 
 export default async function NavHeader() {
+  const user = await getCurrentUser()
 
   return (
         <nav className="fixed top-0 z-50 w-full border-b bg-black border-gray-800">
@@ -15,8 +18,8 @@ export default async function NavHeader() {
                     </svg>
                 </button>
                 <a href="#" className="-m-1.5 p-1.5">
-                  <span className="sr-only">SponsorGas</span>
-                  <Image className="h-10 w-auto" src={SponsorGasLogo} alt="SponsorPay" />
+                  <span className="sr-only">SponsorPay</span>
+                  <Image className="h-10 w-auto" src={SponsorGasLogo} alt="SponsorGas" />
                 </a>
               </div>
               <div className="flex justify-center items-center gap-x-3 ">
@@ -27,7 +30,9 @@ export default async function NavHeader() {
                   Applications
                 </a>
               </div>
-             
+              {user
+                ?<p className="flex justify-end text-white" >{`${user.name}`}</p> 
+                :<LoginWithGithub/>}
             </div>
           </div>
         </nav> 
