@@ -1,7 +1,16 @@
+interface ApplicationConfig{
+  id:string
+  value:string
+  name:string
+}
 interface ChainConfig {
   name: string;
-  contractAddress: string;
+  entryPointContractAddress:string;
+  verifyingPaymasterContractAddress: string;
+  paymasterRegistryContractAddress:string;
+  applications: ApplicationConfig[];
   symbol: string;
+  pimlicoChainValue:string;
   blockExplorer: string;
   rpcUrl: string;
 }
@@ -11,33 +20,38 @@ interface Config {
 }
 
 export const config: Config = {
-  '0xe704': {
-    name: 'Goerli Linea',
-    contractAddress: '',
-    symbol: 'LineaETH',
-    blockExplorer: 'https://explorer.goerli.linea.build',
-    rpcUrl: 'https://rpc.goerli.linea.build',
-  },
-  '0x5': {
-    name: 'Goerli',
-    contractAddress: '',
-    symbol: 'GoerliETH',
-    blockExplorer: 'https://goerli.etherscan.io',
-    rpcUrl: 'https://goerli.infura.io/v3/',
-  },
+  
   '0x14a33': {
     name: 'Goerli Base',
-    contractAddress: '',
+    entryPointContractAddress:'0x5FF137D4b0FDCD49DcA30c7CF57E578a026d2789',
+    verifyingPaymasterContractAddress: '0xe6e61b4cb54ecfc67421b61bcdc5a566d91888ae',
+    paymasterRegistryContractAddress:'',
+    applications:[
+      {
+        id:'1',
+        value:'0x7f829ab036fa3ac32928910152c78d93038dc3e2',
+        name:'Base ETHGlobal Staking'
+      }],
     symbol: 'BaseETH',
+    pimlicoChainValue:'base-goerli',
     blockExplorer: 'https://goerli.basescan.org',
     rpcUrl: 'https://goerli.base.org',
   },
   '0x1a4': {
     name: 'Goerli Optimism',
-    contractAddress: '',
+    entryPointContractAddress:'0x5FF137D4b0FDCD49DcA30c7CF57E578a026d2789',
+    verifyingPaymasterContractAddress: '0xe9866c87082bac6a08a1f7cbbc2697d137fc5dfc',
+    paymasterRegistryContractAddress:'0x44d65c8be690325059dbe4fe11c96440d1400efc',
+    applications:[
+      {
+        id:'1',
+        value:'0xe6e61b4cb54ecfc67421b61bcdc5a566d91888ae',
+        name:'OP ETHGlobal Staking'
+      }],
     symbol: 'OptimismETH',
+    pimlicoChainValue:'optimism-goerli',
     blockExplorer: 'https://goerli-optimism.etherscan.io',
-    rpcUrl: 'https://optimism-goerli.publicnode.com',
+    rpcUrl: process.env.OPTIMISM_GOERLI_RPC!,
   }
 }
 
@@ -50,9 +64,47 @@ export const isSupportedNetwork = (id: string) => {
   return !!(networkId in config );
 }
 
-export const getContractAddressByChainId = (chainId: string): string | undefined => {
+export const getVerifyingPaymasterContractAddressByChainId = (chainId: string): string | undefined => {
   const chainConfig = config[chainId];
   if (chainConfig && isSupportedNetwork(chainId)) {
-    return chainConfig.contractAddress;
+    return chainConfig.verifyingPaymasterContractAddress
+  } else {
+    return ''; // Chain ID not found in config
+  }
+}
+export const getEntryPointContractAddressByChainId = (chainId: string): string | undefined => {
+  const chainConfig = config[chainId];
+  if (chainConfig && isSupportedNetwork(chainId)) {
+    return chainConfig.entryPointContractAddress
+  } else {
+    return ''; // Chain ID not found in config
+  }
+}
+export const getPaymasterRegistryContractAddressByChainId = (chainId: string): string | undefined => {
+  const chainConfig = config[chainId];
+  if (chainConfig && isSupportedNetwork(chainId)) {
+    return chainConfig.paymasterRegistryContractAddress
+  } else {
+    return ''; // Chain ID not found in config
+  }
+}
+export const getPimlicoChainNameByChainId = (chainId: string): string | undefined => {
+  const chainConfig = config[chainId];
+  if (chainConfig && isSupportedNetwork(chainId)) {
+    return chainConfig.pimlicoChainValue
+  } else {
+    return ''; // Chain ID not found in config
+  }
+}
+export const getChainConfigForChainId = (chainId: string): ChainConfig | undefined=> {
+  const chainConfig = config[chainId];
+  if (chainConfig && isSupportedNetwork(chainId)) {
+    return chainConfig;
+  } 
+}
+export const getApplicationsForChainId = (chainId: string): ApplicationConfig[] | undefined=> {
+  const chainConfig = config[chainId];
+  if (chainConfig && isSupportedNetwork(chainId)) {
+    return chainConfig.applications;
   } 
 }

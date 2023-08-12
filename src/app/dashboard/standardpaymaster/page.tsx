@@ -1,16 +1,10 @@
 "use client"
 
-import React, { FormEvent,  useState } from "react";
+import React, { FormEvent,  useEffect,  useState } from "react";
 import Button from "@/components/Button";
 import Dropdown, { DropdownOption } from "@/components/Dropdown";
 import { PhotoIcon } from "@heroicons/react/24/solid";
-import { Paymaster} from "@/lib/types";
-import { config } from "@/lib/config";
-
-const applications:DropdownOption[] = [{ id:'1', value:'',name:'Any'},{ id:'2', value:'0xEA68b3eFbBf63BB837F36A90AA97Df27bBF9B864',name:'ETH GLOBAL STAKING'},
-{ id:'3', value:'0x123',name:'COINBASE SHIELD NFT'},
-]
-const chains:DropdownOption[] = Object.entries(config).map(([_chainId,_chainConfig]) => {return {'id':_chainId,'name':_chainConfig.name,"value":_chainId}})
+import { config, getApplicationsForChainId } from "@/lib/config";
 
 export default  function CreatePaymasterPage() {
 
@@ -24,12 +18,24 @@ export default  function CreatePaymasterPage() {
 	const [question,setQuestion]=useState<string>('')
 	const [holdNFT,setHoldNFT] = useState(false)
 	const [nftCollection,setNFTCollection ] = useState<string>('')
+	const [identityProvider,setIdentityProvider] = useState<string>('')
 
 	const [isLoading,setIsLoading] = useState(false)
 	const [loadingText, setLoadingText] = useState<string>('')
-	const [identityProvider,setIdentityProvider] = useState<string>('')
-  const [selectedChain, setSelectedChain] = useState(chains[0])
-	const [applicationSelected, setApplicationSelected] = useState<DropdownOption>(applications[0])
+
+	const chains:DropdownOption[] = Object.entries(config).map(([_chainId,_chainConfig]) => {return {'id':_chainId,'name':_chainConfig.name,"value":_chainId}})
+	const [selectedChain, setSelectedChain] = useState(chains[0])
+	
+	const [applicationConfig,setApplicationConfig] = useState(getApplicationsForChainId(selectedChain.id) as unknown as DropdownOption[])
+	const [applicationSelected, setApplicationSelected] = useState(applicationConfig && applicationConfig[0])
+	
+
+	useEffect(() => {
+		const newApplicationConfig = getApplicationsForChainId(selectedChain.id) as unknown as DropdownOption[]
+		setApplicationConfig(newApplicationConfig);
+		setApplicationSelected(newApplicationConfig && newApplicationConfig[0]);
+	  }, [ selectedChain]);
+
 
 	const handleStandardPaymasterFormSubmission = async (event: FormEvent) => {
 		event.preventDefault();
@@ -70,6 +76,7 @@ export default  function CreatePaymasterPage() {
 				formData.append('chainId',selectedChain.value)
 		
 				// Send data to the backend
+				console.log(formData.forEach((value,key)=> console.log(`${key}: ${value}`)))
 				const paymasterDataResponse = await fetch("/api/dashboard/standardpaymaster", {
 					method: 'POST',
 					body: formData,
@@ -93,7 +100,7 @@ export default  function CreatePaymasterPage() {
 				setHoldNFT(false);
 				setNFTCollection("");
 				setIdentityProvider("");
-				setApplicationSelected(applications[0]);
+				setApplicationSelected(applicationConfig && applicationConfig[0]);
 			}
 		}catch(e){
 			setIsLoading(false)
@@ -141,7 +148,7 @@ export default  function CreatePaymasterPage() {
 													Application to Supported
 											</label>
 											<div className="mt-2">
-												<Dropdown options={applications} selected={applicationSelected} setSelected={setApplicationSelected} />
+												<Dropdown options={applicationConfig} selected={applicationSelected} setSelected={setApplicationSelected} />
 											</div>
 									</div>
 									{/* Paymaster Name */}
@@ -364,7 +371,7 @@ export default  function CreatePaymasterPage() {
 															</div>:<></>}
 													</div>
 											</fieldset>
-											<fieldset disabled>
+											<fieldset >
 													<legend className="text-sm font-semibold leading-6  text-white">Sybil Resistant Identity (coming soon)</legend>
 													<p className="mt-1 text-sm leading-6  text-gray-500">
 															Prove you are a human
@@ -375,7 +382,8 @@ export default  function CreatePaymasterPage() {
 																			id="gitcoin-passport"
 																			name="identity"
 																			type="radio"
-																			onChange={(e)=>setIdentityProvider('Gitcoin_Passport')}
+																			disabled
+																			onChange={(e)=>setIdentityProvider('gitcoin_passport')}
 																			className="h-4 w-4 border-gray-300  text-white focus:ring-gray-600"
 																	/>
 																	<label htmlFor="gitcoin-passport" className="block text-sm font-medium leading-6  text-white">
@@ -387,7 +395,8 @@ export default  function CreatePaymasterPage() {
 																			id="worldcoin-id"
 																			name="identity"
 																			type="radio"
-																			onChange={(e)=>setIdentityProvider('Worldcoin')}
+																			checked={identityProvider === 'worldcoin'}
+																			onChange={(e)=>setIdentityProvider('worldcoin')}
 																			className="h-4 w-4 border-gray-300  text-white focus:ring-gray-600"
 																	/>
 																	<label htmlFor="worldcoin-id" className="block text-sm font-medium leading-6  text-white">
@@ -399,6 +408,7 @@ export default  function CreatePaymasterPage() {
 																			id="poh"
 																			name="identity"
 																			type="radio"
+																			disabled
 																			onChange={(e)=>setIdentityProvider('poh')}
 																			className="h-4 w-4 border-gray-300  text-white focus:ring-gray-600"
 																	/>
