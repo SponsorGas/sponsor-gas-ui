@@ -20,7 +20,6 @@ interface Config {
 }
 
 export const config: Config = {
-  
   '0x14a33': {
     name: 'Goerli Base',
     entryPointContractAddress:'0x5FF137D4b0FDCD49DcA30c7CF57E578a026d2789',
@@ -31,6 +30,11 @@ export const config: Config = {
         id:'1',
         value:'0x7f829ab036fa3ac32928910152c78d93038dc3e2',
         name:'Base ETHGlobal Staking'
+      },
+      {
+        id:'2',
+        value:'0x36d07d0b52eab491d714732c7cc79dc39e3ab373',
+        name:'xSuperhack NFT'
       }],
     symbol: 'BaseETH',
     pimlicoChainValue:'base-goerli',
@@ -47,6 +51,11 @@ export const config: Config = {
         id:'1',
         value:'0xe6e61b4cb54ecfc67421b61bcdc5a566d91888ae',
         name:'OP ETHGlobal Staking'
+      },
+      {
+        id:'2',
+        value:'0x04f726034cebb6dabc6dc6a57f4abe0b342e02a1',
+        name:'xSuperhack NFT'
       }],
     symbol: 'OptimismETH',
     pimlicoChainValue:'optimism-goerli',
