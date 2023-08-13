@@ -51,7 +51,7 @@ model PaymasterCriteria {
 
 model Application {
   id           String      @id @default(cuid())
-  value        String // Application address
+  value        String      @unique // Application address 
   name         String
   paymasters   Paymaster[] // Relationship to Paymaster
   registerer   User?       @relation(fields: [registererId], references: [id])

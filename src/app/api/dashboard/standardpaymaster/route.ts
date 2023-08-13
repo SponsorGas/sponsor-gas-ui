@@ -58,11 +58,11 @@ export async function POST(request:NextRequest) {
 		}
 
 		if(identity && identity != ''){
-				const identityCriteria = { isMandatory:true, type:'nft_challenge', identityProvider:identity }
+				const identityCriteria = { isMandatory:true, type:'identity_challenge', identityProvider:identity }
 				paymasterCriteria.push(identityCriteria)
 		}
 		const paymasterContractAddress = getVerifyingPaymasterContractAddressByChainId(chainId)
-		const paymasterOffchainURL = `http://localhost:8001/api/paymasters/${paymasterContractAddress}`
+		const paymasterOffchainURL = `http://localhost:8001/api/chains/${chainId}/paymasters/${paymasterContractAddress}`
 		console.log(`PaymasterAddress: ${paymasterContractAddress} `)
 		console.log(`PaymasterOffchainURL : ${paymasterOffchainURL} `)
 		const paymasterDb = await prisma.paymaster.create({
@@ -74,11 +74,7 @@ export async function POST(request:NextRequest) {
 						image:paymasterCoverImageCID,
 						type:type,
 						applications:{
-							create:{
-								name:application.name,
-								value:application.value,
-								chain:{ connect: { chainId : chainId } }
-							}
+							connect:{ value:application.value }
 						},
 						PaymasterCriteria:{
 							createMany:{
