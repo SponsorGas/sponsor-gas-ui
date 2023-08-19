@@ -1,3 +1,4 @@
+import Container from "@/components/Container"
 import Sidebar from "@/components/Sidebar"
 
 export default function DashboardLayout({
@@ -7,13 +8,16 @@ export default function DashboardLayout({
 }) {
  
   return (
-    <>
-      <Sidebar/>
-      <div className="p-4 sm:ml-64">
-        <div className="p-4 border-2 border-gray-200 border-dashed rounded-lg mt-14">
-            {children}
-        </div>
-      </div>
-    </>
+    <div className="pt-20">
+      <Container> 
+          <Sidebar/>
+          <div className="sm:ml-48">
+            <div className="pl-4 mt-6">
+                {children}
+            </div>
+          </div>
+      </Container>
+    </div>
+      
     )
 }

@@ -24,11 +24,11 @@ export default function Dropdown({options,setSelected,selected}:DropdownProps) {
       {({ open }) => (
         <>
           {/* <Listbox.Label className="block text-sm font-medium leading-6 text-gray-900">Assigned to</Listbox.Label> */}
-          <div className="relative  text-white flex rounded-md shadow-sm ring-1 ring-gray-300 focus-within:ring-0 focus-within:bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 p-0.5 sm:max-w-md">
-            <Listbox.Button className="relative w-full cursor-default rounded-md  py-1.5 pl-3 pr-10 text-left bg-gray-900 focus-within:bg-gray-900 shadow-sm focus:outline-none  sm:text-sm sm:leading-6">
+          <div className="relative  text-black flex rounded-md shadow-sm ring-1 ring-gray-400 focus-within:ring-0 focus-within:bg-gray-600 p-0.5 sm:max-w-md">
+            <Listbox.Button className="relative w-full cursor-default rounded-md  py-1.5 pl-3 pr-10 text-left focus-within:bg-gray-300 shadow-sm focus:outline-none  sm:text-sm sm:leading-6">
               <span className="flex items-center ">
                 {/* <img src={selected.avatar} alt="" className="h-5 w-5 flex-shrink-0 rounded-full" /> */}
-                <span className=" block truncate text-white">{`${(selected)?selected.name:'Select an option'}`}</span>
+                <span className=" block truncate text-black">{`${(selected)?selected.name:'Select an option'}`}</span>
               </span>
               <span className="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2">
                 <ChevronUpDownIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />

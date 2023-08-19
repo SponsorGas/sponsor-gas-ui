@@ -1,42 +1,86 @@
 import Image from "next/image";
-import SponsorGasLogo from "../../../public/sponsor_gas.png" 
 import { getCurrentUser } from "@/lib/session";
 import LoginWithGithub from "../LoginWithGithub";
+import Container from "../Container";
 
+const links = [
+  {
+      to: "/paymasters",
+      label: "Paymasters",
+  },
+  {
+      to: "/applications",
+      label: "Applications",
+  },
+  {
+      to: "/dashboard",
+      label: "Dashboard",
+  },
+];
 export default async function NavHeader() {
   const user = await getCurrentUser()
 
   return (
-        <nav className="fixed top-0 z-50 w-full border-b bg-black border-gray-800">
-          <div className="px-3 py-3 lg:px-5 lg:pl-3">
-            <div className="items-center grid grid-cols-3">
-              <div className="flex items-center justify-start">
-                <button data-drawer-target="logo-sidebar" data-drawer-toggle="logo-sidebar" aria-controls="logo-sidebar" type="button" className="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
-                    <span className="sr-only">Open sidebar</span>
-                    <svg className="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                      <path clipRule="evenodd" fillRule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"></path>
-                    </svg>
-                </button>
-                <a href="#" className="-m-1.5 p-1.5">
-                  <span className="sr-only">SponsorPay</span>
-                  <Image className="h-10 w-auto" src={SponsorGasLogo} alt="SponsorGas" />
-                </a>
+    <header>
+      <nav className="fixed top-0 z-40 w-full border-b border-black/5 dark:border-white/5 lg:border-transparent backdrop-blur-xl bg-white/40 ">
+          <Container>
+              <div className="relative flex flex-wrap items-center justify-between gap-6 py-3 md:gap-0 md:py-4">
+                  <div className="relative z-20 flex w-full justify-between md:px-0 lg:w-max">
+                      <a href="/" aria-label="logo" className="flex items-center space-x-2">
+                          {/* <div aria-hidden="true" className="flex space-x-1">
+                              <div className="h-4 w-4 rounded-full bg-gray-900 dark:bg-white"></div>
+                              <div className="h-6 w-2 bg-primary"></div>
+                          </div> */}
+                          <span className="text-2xl font-bold text-gray-900 dark:text-white">Sponsor Gas</span>
+                      </a>
+
+                      <div className="relative flex max-h-10 items-center lg:hidden">
+                          <button aria-label="humburger" id="hamburger" className="relative -mr-6 p-6">
+                              <div aria-hidden="true" id="line" className="m-auto h-0.5 w-5 rounded bg-sky-900 transition duration-300 dark:bg-gray-300"></div>
+                              <div aria-hidden="true" id="line2" className="m-auto mt-2 h-0.5 w-5 rounded bg-sky-900 transition duration-300 dark:bg-gray-300"></div>
+                          </button>
+                      </div>
+                  </div>
+                  <div id="navLayer" aria-hidden="true" className="fixed inset-0 z-10 h-screen w-screen origin-bottom scale-y-0 bg-white/70 backdrop-blur-2xl transition duration-500 dark:bg-gray-900/70 lg:hidden"></div>
+                  <div id="navlinks" className="invisible absolute top-full left-0 z-20 w-full origin-top-right translate-y-1 scale-90 flex-col flex-wrap justify-end gap-6 rounded-3xl border border-gray-100 bg-white p-8 opacity-0 shadow-2xl shadow-gray-600/10 transition-all duration-300 dark:border-gray-700 dark:bg-gray-800 dark:shadow-none lg:visible lg:relative lg:flex lg:w-7/12 lg:translate-y-0 lg:scale-100 lg:flex-row lg:items-center lg:gap-0 lg:border-none lg:bg-transparent lg:p-0 lg:opacity-100 lg:shadow-none">
+                      <div className="w-full text-gray-600 dark:text-gray-200 lg:w-auto lg:pr-4 lg:pt-0">
+                          <ul className="flex flex-col gap-6 tracking-wide lg:flex-row lg:gap-0 lg:text-sm">
+                              {
+                                  links.map((link,index) => (
+                                      <li key={index}>
+                                          <a href={link.to} className="hover:text-primary block transition dark:hover:text-white md:px-4">
+                                              <span>{link.label}</span>
+                                          </a>
+                                      </li>
+                                  ))
+                              }
+                              {/* <li>
+                                  <a href="https://tailus.gumroad.com/l/astls-premium" target="_blank" className="flex gap-2 font-semibold text-gray-700 transition hover:text-primary dark:text-white dark:hover:text-white md:px-4">
+                                      <span>Premium</span>
+                                      <span className="flex rounded-full bg-primary/20 px-1.5 py-0.5 text-xs tracking-wider text-purple-700 dark:bg-white/10 dark:text-orange-300"> new</span>
+                                  </a>
+                              </li> */}
+                          </ul>
+                      </div>
+
+                      <div className="mt-12 lg:mt-0">
+                          {/* <a href="/register" className="relative flex h-9 w-full items-center justify-center px-4 before:absolute before:inset-0 before:rounded-full before:bg-primary before:transition before:duration-300 hover:before:scale-105 active:duration-75 active:before:scale-95 sm:w-max">
+                              <span className="relative text-sm font-semibold text-white"> Get Started</span>
+                          </a> */}
+                          {user
+                        ?
+													<div className="flex items-center justify-center w-10 h-10 m-0.5 bg-blue-500 rounded-full">
+														<span className="text-white font-semibold text-lg">{`${user.name!.charAt(0)}`}</span>
+													</div>
+                        :<LoginWithGithub/>}
+                      </div>
+                      
+                      
+                  </div>
               </div>
-              <div className="flex justify-center items-center gap-x-3 ">
-                <a href="#" className="text-sm font-semibold leading-6  text-white">
-                  Paymasters
-                </a>
-                <a href="#" className="text-sm font-semibold leading-6  text-white">
-                  Applications
-                </a>
-              </div>
-              {user
-                ?<p className="flex justify-end text-white" >{`${user.name}`}</p> 
-                :<LoginWithGithub/>}
-            </div>
-          </div>
-        </nav> 
+          </Container>
+      </nav>
+    </header>
   )
-  
 }
 

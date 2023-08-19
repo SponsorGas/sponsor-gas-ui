@@ -10,10 +10,11 @@ interface ButtonProps{
 
 export default function Button({label,onClick,type,isLoading,loadingText,subText}:ButtonProps){
     return (
-		<div className="p-0.5 rounded-lg bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 ">
+		<div className="w-fit p-0.5 rounded-lg  border border-violet-800 bg-violet-500 "> 
+		{/* bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 */}
 			<button
 				type={type}
-				className="inline-flex items-center gap-x-2 rounded-md bg-gray-900 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-gray-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600"
+				className="inline-flex items-center gap-x-2 rounded-md px-3.5 py-2.5 text-white  text-sm font-semibold  shadow-sm hover:bg-violet-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600"
 				onClick={onClick}
 				disabled={isLoading}
 			>
