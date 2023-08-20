@@ -99,7 +99,7 @@ export default async function MyPaymastersPage(){
 										</td>
 										<td className="px-6 py-4">
 												<a href="#" className="font-medium px-1 text-blue-600 dark:text-blue-500 hover:underline">Activate</a>
-												<a href="#" className="font-medium px-1 text-blue-600 dark:text-blue-500 hover:underline">View</a>
+												<a href={`/paymasters/${paymaster.id}`} className="font-medium px-1 text-blue-600 dark:text-blue-500 hover:underline">View</a>
 										</td>
 								</tr>
 								))}

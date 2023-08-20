@@ -1,3 +1,5 @@
+import { Paymaster } from '../../../sponsor-gas-sdk/dist/model';
+import {SponsorGas} from 'sponsor-gas-sdk'
 import prisma from "./prisma";
 
 export async function getUserPaymasters( userEmail:string){
@@ -17,4 +19,12 @@ export async function getUserPaymasters( userEmail:string){
         return []
       }
       return paymasters;
+}
+
+
+
+export async function getPaymasterById(id: string) {
+  const sponsorGas = new SponsorGas()
+  const paymaster: Paymaster | null = await sponsorGas.getPaymaster(id)
+  return paymaster
 }

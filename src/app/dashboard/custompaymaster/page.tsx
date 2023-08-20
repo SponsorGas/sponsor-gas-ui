@@ -134,7 +134,7 @@ export default  function CreatePaymasterPage() {
 			{isLoading && ( <LoadingOverlay /> )}
 			<div className="flex flex-col items-center justify-between" >
 				{/* <h6 className="bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 bg-clip-text text-transparent">Empowering Users and Gas Fee Sponsors</h6> */}
-				<h1 className="text-5xl font-bold bg-gradient-to-r from-violet-500  to-cyan-600 bg-clip-text text-transparent">Custom Paymasters</h1>
+				<h1 className="text-5xl font-bold bg-gradient-to-r from-violet-800  to-blue-700 bg-clip-text text-transparent">Custom Paymasters</h1>
 				<p className="text-sm lg:px-28 text-black mb-8 text-center line-clamp-5">Pre deployed paymaster, just configure your conditions for sponsoring users gas fee.
 					If you want more control checkout Create Paymaster.
 				</p>
