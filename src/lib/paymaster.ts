@@ -1,6 +1,6 @@
 import prisma from "./prisma";
 import { Web3Storage } from "./../../node_modules/web3.storage";
-import { Paymaster } from "sponsor-gas-simple-sdk/dist/model";
+import { Paymaster } from "@/model";
 
 export async function getUserPaymasters( userEmail:string){
     const paymasters = await prisma.paymaster.findMany({
