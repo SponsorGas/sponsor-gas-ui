@@ -71,6 +71,7 @@ export async function POST(request:NextRequest) {
 						paymasterOffchainService:paymasterOffchainURL,
 						description:description,
 						name:name,
+						published:true,
 						image:paymasterCoverImageCID,
 						type:type,
 						applications:{

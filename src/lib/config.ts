@@ -33,7 +33,7 @@ export const config: Config = {
       },{
         id:'2',
         value:'native_asset_transfer',
-        name:'NAVH Pay'
+        name:'SponsorPay'
       }
       ],
     symbol: 'BaseETH',
