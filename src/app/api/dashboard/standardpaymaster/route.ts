@@ -62,7 +62,7 @@ export async function POST(request:NextRequest) {
 				paymasterCriteria.push(identityCriteria)
 		}
 		const paymasterContractAddress = getVerifyingPaymasterContractAddressByChainId(chainId)
-		const paymasterOffchainURL = `http://localhost:8001/api/chains/${chainId}/paymasters/${paymasterContractAddress}`
+		const paymasterOffchainURL = `https://sponsor-gas-backend.vercel.app/api/chains/${chainId}/paymasters/${paymasterContractAddress}`
 		console.log(`PaymasterAddress: ${paymasterContractAddress} `)
 		console.log(`PaymasterOffchainURL : ${paymasterOffchainURL} `)
 		const paymasterDb = await prisma.paymaster.create({
