@@ -12,7 +12,7 @@ export default  function CreatePaymasterPage() {
   const [paymasterName,setPaymasterName] = useState<string>('')
   const [paymasterDescription,setPaymasterDescription] = useState<string>('')
 	const [paymasterImage, setPaymasterImage] = useState<File>();
-  const [paymasterType,setPaymasterType] = useState<string>('Standard Verification Paymaster')
+  const [paymasterType,setPaymasterType] = useState<string>('Verifying Paymaster')
 	const [watchVideo,setWatchVideo] = useState(false)
 	const [videoFile,setVideoFile] = useState<File>()
 	const [answerQuestion,setAnswerQuestion] = useState(false)

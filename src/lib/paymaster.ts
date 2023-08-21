@@ -1,6 +1,6 @@
-import { Paymaster } from '../../../sponsor-gas-sdk/dist/model';
-import {SponsorGas} from 'sponsor-gas-sdk'
+import { SponsorGas } from "sponsor-gas-simple-sdk";
 import prisma from "./prisma";
+import { Paymaster } from "sponsor-gas-simple-sdk/dist/model";
 
 export async function getUserPaymasters( userEmail:string){
     const paymasters = await prisma.paymaster.findMany({

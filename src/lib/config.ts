@@ -20,6 +20,27 @@ interface Config {
 }
 
 export const config: Config = {
+  '0xe704': {
+    name: 'Goerli Linea',
+    entryPointContractAddress:'0x5FF137D4b0FDCD49DcA30c7CF57E578a026d2789',
+    verifyingPaymasterContractAddress: '0xd6F6bA8025366300822Dae5008762074bC72F1B5',
+    paymasterRegistryContractAddress:'',
+    applications:[
+      {
+        id:'1',
+        value:'0xea68b3efbbf63bb837f36a90aa97df27bbf9b864',
+        name:'Linea ETHGlobal Staking'
+      },{
+        id:'2',
+        value:'native_asset_transfer',
+        name:'NAVH Pay'
+      }
+      ],
+    symbol: 'BaseETH',
+    pimlicoChainValue:'base-goerli',
+    blockExplorer: 'https://goerli.basescan.org',
+    rpcUrl: 'https://goerli.base.org',
+  },
   '0x14a33': {
     name: 'Goerli Base',
     entryPointContractAddress:'0x5FF137D4b0FDCD49DcA30c7CF57E578a026d2789',
