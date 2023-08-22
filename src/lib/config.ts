@@ -28,18 +28,18 @@ export const config: Config = {
     applications:[
       {
         id:'1',
-        value:'0xea68b3efbbf63bb837f36a90aa97df27bbf9b864',
-        name:'Linea ETHGlobal Staking'
+        value:'0x2ceb1c6626da4cd3c2d48ed99536a59b7f8241b9',
+        name:'NAVHHacker NFT'
       },{
         id:'2',
         value:'native_asset_transfer',
         name:'SponsorPay'
       }
       ],
-    symbol: 'BaseETH',
-    pimlicoChainValue:'base-goerli',
-    blockExplorer: 'https://goerli.basescan.org',
-    rpcUrl: 'https://goerli.base.org',
+    symbol: 'LineaETH',
+    pimlicoChainValue:'linea-testnet',
+    blockExplorer: 'https://explorer.goerli.linea.build',
+    rpcUrl: 'https://rpc.goerli.linea.build',
   },
   '0x14a33': {
     name: 'Goerli Base',

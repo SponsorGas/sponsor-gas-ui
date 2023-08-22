@@ -284,7 +284,7 @@ export default  function CreatePaymasterPage() {
 										<legend className="text-sm font-semibold leading-6  ">{`Paymaster Conditions`}</legend>
 											<div className="mt-6 space-y-6">
 													{/*select Video  */}
-													{/* <div className="relative flex gap-x-3">
+													<div className="relative flex gap-x-3">
 															<div className="flex h-6 items-center">
 																	<input
 																			id="watch-video"
@@ -301,9 +301,9 @@ export default  function CreatePaymasterPage() {
 																	</label>
 																	<p className="text-gray-500">Watch complete Ad video to get gas fee sponsored.</p>
 															</div>
-													</div> */}
+													</div>
 													{/*Upload Video File */}
-													{/* {watchVideo?
+													{watchVideo?
 													<div className="col-span-full">
 														<label htmlFor="cover-photo" className="block text-sm font-medium leading-6">
 															Upload Video
@@ -334,9 +334,9 @@ export default  function CreatePaymasterPage() {
 																<p className="text-xs leading-5 text-gray-400">MP4 up to 20MB</p>
 															</div>
 														</div>
-													</div>:<></>} */}
+													</div>:<></>}
 													{/*Select question */}
-													{/* <div className="relative flex gap-x-3">
+													<div className="relative flex gap-x-3">
 															<div className="flex h-6 items-center">
 																	<input
 																			id="answer-question"
@@ -353,9 +353,9 @@ export default  function CreatePaymasterPage() {
 																	</label>
 																	<p className="text-gray-500">Answer a question related to sponsor to get gas fee sponsored.</p>
 															</div>
-													</div> */}
+													</div>
 													{/*Write question */}
-													{/* {answerQuestion?
+													{answerQuestion?
 													<div className="col-span-full">
 														<label htmlFor="about" className="block text-sm font-medium leading-6 ">
 															Question, Options and Answer
@@ -373,7 +373,7 @@ export default  function CreatePaymasterPage() {
 																	/>
 															</div>
 														</div>
-													</div> :<></>} */}
+													</div> :<></>}
 
 													{/*HOLD A NFT */}
 													<div className="relative flex gap-x-3">

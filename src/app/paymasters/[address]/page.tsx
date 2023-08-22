@@ -104,15 +104,15 @@ const links = [
                 {`${paymaster.description}`}
               </p>
               <div className="grid grid-cols-1 gap-x-8 gap-y-6 text-base font-semibold leading-7 text-black sm:grid-cols-2 md:flex lg:gap-x-10">
-                {links.map((link) => (
+                {/* {links.map((link) => (
                   <a key={link.name} href={link.href}>
                     {link.name} <span aria-hidden="true">&rarr;</span>
                   </a>
-                ))}
+                ))} */}
               </div>
             </div>
             <div className="relative aspect-w-4 aspect-h-3 w-full m-4 p-4  overflow-hidden lg:aspect-none group-hover:opacity-75 lg:h-80">
-              <Image src={paymaster.image ?? '/sponsor_gas_defaultcover.png'}  alt={`product.imageAlt`} layout="fill" objectFit="contain"  className="border rounded-2xl" />
+              <Image src={paymaster.image ?? '/sponsor_gas_defaultcover.png'}  alt={`product.imageAlt`} layout="fill" objectFit="contain"  className="border rounded-2xl" unoptimized />
             </div>
 
           </div>
