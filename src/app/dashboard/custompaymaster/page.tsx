@@ -292,11 +292,11 @@ export default  function CreatePaymasterPage() {
 																			type="checkbox"
 																			checked={watchVideo}
 																			onChange={(e)=>setWatchVideo((v)=> !v)}
-																			className="h-4 w-4 rounded border-gray-300  text-white focus:ring-gray-600"
+																			className="h-4 w-4 rounded border-gray-300  text-black focus:ring-gray-600"
 																	/>
 															</div>
 															<div className="text-sm leading-6">
-																	<label htmlFor="watch-video" className="font-medium  text-white">
+																	<label htmlFor="watch-video" className="font-medium  text-black">
 																			Watch Video
 																	</label>
 																	<p className="text-gray-500">Watch complete Ad video to get gas fee sponsored.</p>
@@ -317,7 +317,7 @@ export default  function CreatePaymasterPage() {
 																		className="relative cursor-pointer font-semibold text-gray-600 focus-within:outline-none "
 																	>
 																		<span
-																			className="block flex-1 text-white  outline-none focus:outline-none sm:text-sm sm:leading-6"
+																			className="block flex-1 text-black  outline-none focus:outline-none sm:text-sm sm:leading-6"
 																			>Upload a video 
 																		</span>
 																		<input 
@@ -344,11 +344,11 @@ export default  function CreatePaymasterPage() {
 																			type="checkbox"
 																			checked={answerQuestion}
 																			onChange={(e)=>setAnswerQuestion((v)=> !v)}
-																			className="h-4 w-4 rounded border-gray-300  text-white focus:ring-gray-600"
+																			className="h-4 w-4 rounded border-gray-300  text-black focus:ring-gray-600"
 																	/>
 															</div>
 															<div className="text-sm leading-6">
-																	<label htmlFor="answer-question" className="font-medium  text-white">
+																	<label htmlFor="answer-question" className="font-medium  text-black">
 																			Answer a question
 																	</label>
 																	<p className="text-gray-500">Answer a question related to sponsor to get gas fee sponsored.</p>
