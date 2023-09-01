@@ -1,6 +1,6 @@
 "use client"
 
-import React, { FormEvent,  useEffect,  useState } from "react";
+import React, {   useEffect,  useState } from "react";
 import Button from "@/components/Button";
 import Dropdown, { DropdownOption } from "@/components/Dropdown";
 import { PhotoIcon } from "@heroicons/react/24/solid";
@@ -8,18 +8,174 @@ import { config, getApplicationsForChainId } from "@/lib/config";
 import { useToast } from "@/providers/ToastProvider";
 import LoadingOverlay from "@/components/LoadingOverlay";
 
+interface PaymasterCriteriaComponentProps {
+	setPaymasterCriteriaData: (data: any) => void;
+  paymasterCriteriaData: any;
+}
+
+const WatchVideoCondition = ({paymasterCriteriaData:videoFile,setPaymasterCriteriaData}:PaymasterCriteriaComponentProps) => {
+	return (
+		<div className="w-full ">
+			<label htmlFor="cover-photo" className="block text-sm font-medium leading-6">
+				Upload Video
+			</label>
+			<div className="flex rounded-md shadow-sm ring-1 bg-gray-900  ring-gray-300 focus-within:ring-0 focus-within:bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 p-0.5 justify-center">
+				<div className="text-center w-full rounded-md bg-gray-900 ">
+					<PhotoIcon className="mx-auto h-12 w-12 text-gray-200" aria-hidden="true" />
+					<div className="mt-4 flex text-sm justify-center leading-6 text-gray-200">
+						<label
+							htmlFor="video-file-upload"
+							className="relative cursor-pointer font-semibold text-gray-600 focus-within:outline-none "
+						>
+							<span
+								className="block flex-1 text-white  outline-none focus:outline-none sm:text-sm sm:leading-6"
+								>Upload a video 
+							</span>
+							<input 
+								onChange={(e)=> setPaymasterCriteriaData(e.target.files?.[0])} 
+								accept="video/mp4"
+								id="video-file-upload" 
+								name="video-file-upload" 
+								type="file"
+								className="sr-only " 
+							/>
+						</label>
+						<p className="pl-2">{videoFile ? videoFile.name : 'No file selected'}</p>
+					</div>
+					<p className="text-xs leading-5 text-gray-400">MP4 up to 20MB</p>
+				</div>
+			</div>
+		</div>
+	);
+}
+const AnswerQuestionCondition = ({paymasterCriteriaData:questionBook,setPaymasterCriteriaData:setQuestionBook}:PaymasterCriteriaComponentProps) => {
+	return (
+		<div className="col-span-full">
+			<label htmlFor="about" className="block text-sm font-medium leading-6 ">
+				Question, Options and Answer
+			</label>
+			<div className="mt-2">
+				<div className="flex rounded-md shadow-sm ring-1 ring-gray-300 focus-within:ring-0 focus-within:bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 p-0.5 ">
+						<textarea
+								id="about"
+								name="about"
+								rows={4}
+								className="block flex-1 border-0 bg-gray-900 py-1.5 pl-2 text-white rounded-md placeholder:text-gray-400 focus:ring-0 outline-none focus:outline-none sm:text-sm sm:leading-6"
+								value={questionBook ?? ''}
+								onChange={(e)=> setQuestionBook(e.target.value)}
+								placeholder={`{\n\t"question":"Sample Question",\n\t"options":['a','b','c','d'],\n\t"answer":'a'\n}`}
+						/>
+				</div>
+			</div>
+		</div>
+	);
+}
+const HoldNFTCondition = ({paymasterCriteriaData:nftCollection,setPaymasterCriteriaData:setNFTCollection}:PaymasterCriteriaComponentProps) => {
+	return (
+		<div className="sm:col-span-6">
+			<label htmlFor="name" className="block text-sm font-medium leading-6">
+					NFT Collection Address
+			</label>
+			<div className="mt-2">
+					<div className="flex rounded-md shadow-sm ring-1 bg-gray-900 ring-gray-300 focus-within:ring-0 focus-within:bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 p-0.5 sm:max-w-md">
+							<input
+									type="text"
+									name="nft-collection-address"
+									id="nft-collection-address"
+									autoComplete="nft-collection-address"
+									value={nftCollection}
+									onChange={(e)=> setNFTCollection(e.target.value)}
+									placeholder="0x"
+									className="block flex-1 border-0 bg-gray-300 py-1.5 pl-2 text-black rounded-md placeholder:text-gray-400 focus:ring-0 outline-none focus:outline-none sm:text-sm sm:leading-6"
+							/>
+					</div>
+			</div>
+		</div>
+	);
+}
+const IdentityCondition = ({paymasterCriteriaData:identityProvider,setPaymasterCriteriaData:setIdentityProvider}:PaymasterCriteriaComponentProps) => {
+	return (
+		<fieldset className="sm:col-span-6" >
+			<legend className="text-sm font-semibold leading-6 ">Sybil Resistant Identity </legend>
+			<p className="mt-1 text-sm leading-6  text-gray-500">
+					Prove you are a human
+			</p>
+			<div className="mt-6 space-y-6">
+					
+					<div className="flex items-center gap-x-3">
+							<input
+									id="worldcoin-id"
+									name="identity"
+									type="radio"
+									checked={identityProvider === 'worldcoin'}
+									onChange={(e)=>setIdentityProvider('worldcoin')}
+									className="h-4 w-4 border-gray-300  focus:ring-gray-600"
+							/>
+							<label htmlFor="worldcoin-id" className="block text-sm font-medium leading-6 ">
+									Worldcoin Identity
+							</label>
+					</div>
+					<div className="flex items-center gap-x-3">
+							<input
+									id="gitcoin-passport"
+									name="identity"
+									type="radio"
+									disabled
+									onChange={(e)=>setIdentityProvider('gitcoin_passport')}
+									className="h-4 w-4 border-gray-300  focus:ring-gray-600"
+							/>
+							<label htmlFor="gitcoin-passport" className="block text-sm font-medium leading-6 ">
+									Gitcoin Passport (coming soon)
+							</label>
+					</div>
+					<div className="flex items-center gap-x-3">
+							<input
+									id="poh"
+									name="identity"
+									type="radio"
+									disabled
+									onChange={(e)=>setIdentityProvider('poh')}
+									className="h-4 w-4 border-gray-300  focus:ring-gray-600"
+							/>
+							<label htmlFor="poh" className="block text-sm font-medium leading-6 ">
+									Proof Of Humanity (coming soon)
+							</label>
+					</div>
+			</div>
+		</fieldset>
+	);
+}
+const criterias = [
+	{ type: 'watch-video', label: 'Watch Video', component: WatchVideoCondition },
+	{ type: 'answer-question', label: 'Answer a Question', component: AnswerQuestionCondition },
+	{ type: 'hold-nft', label: 'Hold a NFT', component: HoldNFTCondition },
+	{ type: 'prove-identity', label: 'Sybil Resistant Identity', component: IdentityCondition },
+	// Add more conditions here as needed
+];
+
+
 export default  function CreatePaymasterPage() {
   const [paymasterName,setPaymasterName] = useState<string>('')
   const [paymasterDescription,setPaymasterDescription] = useState<string>('')
 	const [paymasterImage, setPaymasterImage] = useState<File>();
   const [paymasterType,setPaymasterType] = useState<string>('Verifying Paymaster')
-	const [watchVideo,setWatchVideo] = useState(false)
-	const [videoFile,setVideoFile] = useState<File>()
-	const [answerQuestion,setAnswerQuestion] = useState(false)
-	const [question,setQuestion]=useState<string>('')
-	const [holdNFT,setHoldNFT] = useState(false)
-	const [nftCollection,setNFTCollection ] = useState<string>('')
-	const [identityProvider,setIdentityProvider] = useState<string>('')
+
+	const [selectedPaymasterCriteria,setSelectedPaymasterCriteria] = useState<{type:string,data:any}>({type:'',data:''})
+	
+	const selectedCriteriaComponent = criterias.find((criteria) => criteria.type === selectedPaymasterCriteria?.type)?.component;
+	
+	const handlePaymasterCriteriaChange = (criteriaType:string) => {
+    setSelectedPaymasterCriteria({type:criteriaType,data:''});
+  };
+	const handlePaymasterCriteriaData = (criteriaData:any) => {
+    if(selectedPaymasterCriteria){
+			setSelectedPaymasterCriteria({type:selectedPaymasterCriteria?.type,data:criteriaData});
+		}else{
+			addToast("invalid operation","error" )
+		}
+  };
+
+
 
 	const [isLoading,setIsLoading] = useState(false)
 	const [loadingText, setLoadingText] = useState<string>('')
@@ -58,22 +214,22 @@ export default  function CreatePaymasterPage() {
 					formData.append('coverImage', paymasterImage);
 				}
 				// Append video file
-				if (watchVideo && videoFile) {
-					formData.append('adVideo', videoFile);
+				if (selectedPaymasterCriteria.type === 'watch-video' && selectedPaymasterCriteria.data !== '') {
+					formData.append('adVideo', selectedPaymasterCriteria.data);
 				}
 				// Append question data
-				if (answerQuestion && question) {
-					formData.append('question', JSON.stringify(JSON.parse(question)));
+				if (selectedPaymasterCriteria.type === 'answer-question' && selectedPaymasterCriteria.data !== '') {
+					formData.append('question', JSON.stringify(JSON.parse(selectedPaymasterCriteria.data)));
 				}
 
 				// Append NFT data
-				if (holdNFT && nftCollection) {
-					formData.append('nftCollection', nftCollection);
+				if (selectedPaymasterCriteria.type === 'hold-nft' && selectedPaymasterCriteria.data !== '') {
+					formData.append('nftCollection', selectedPaymasterCriteria.data);
 				}
 		
 				// Append identity data
-				if (identityProvider) {
-					formData.append('identity', identityProvider);
+				if (selectedPaymasterCriteria.type === 'prove-identity' && selectedPaymasterCriteria.data !== '') {
+					formData.append('identity', selectedPaymasterCriteria.data);
 				}
 				formData.append('chainId',selectedChain.value)
 		
@@ -95,13 +251,6 @@ export default  function CreatePaymasterPage() {
 				setPaymasterDescription("");
 				setPaymasterImage(undefined);
 				setPaymasterType("Standard Verification Paymaster");
-				setWatchVideo(false);
-				setVideoFile(undefined);
-				setAnswerQuestion(false);
-				setQuestion("");
-				setHoldNFT(false);
-				setNFTCollection("");
-				setIdentityProvider("");
 				setApplicationSelected(applicationConfig && applicationConfig[0]);
 				setCurrentStep(1)
 			}
@@ -173,24 +322,7 @@ export default  function CreatePaymasterPage() {
 											{`This information will be displayed publicly`}
 									</p>
 								</div>
-								{/* Paymaster supported Chain */}
-								<div className="sm:col-span-3">
-										<label htmlFor="country" className="block text-sm font-medium leading-6 ">
-												Select paymaster chain
-										</label>
-										<div className="mt-2">
-											<Dropdown options={chains} setSelected={setSelectedChain} selected={selectedChain}  />
-										</div>
-								</div>
-								{/* Paymaster supported Application */}
-								<div className="sm:col-span-3">
-										<label htmlFor="country" className="block text-sm font-medium leading-6 ">
-												Application to Supported
-										</label>
-										<div className="mt-2">
-											<Dropdown options={applicationConfig} selected={applicationSelected} setSelected={setApplicationSelected} />
-										</div>
-								</div>
+								
 								{/* Paymaster Name */}
 								<div className="sm:col-span-4">
 										<label htmlFor="name" className="block text-sm font-medium leading-6">
@@ -275,197 +407,49 @@ export default  function CreatePaymasterPage() {
 				{currentStep === 2 && 
 						<div className="grid w-1/2 grid-cols-1 items-start">
 							{/* Paymaster Condition Configuration */}
-								<div className="grid max-w-2xl grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-6 text-black">
-									<div className="sm:col-span-6">
-										<h2 className="text-xl font-semibold  leading-7 ">Paymaster Configuration</h2>
-										<p className="mt-1 text-sm leading-6 text-gray-600">Configuration/Rules user needs to fulfill.</p>
+							<div className="max-w-2xl text-black">
+									<div className="">
+										<h2 className="text-xl font-semibold leading-7">Paymaster Configuration</h2>
+										<p className="mt-1 text-sm leading-6 text-gray-600">
+											Configuration/Rules user needs to fulfill.
+										</p>
 									</div>
-									<fieldset className="sm:col-span-6">
-										<legend className="text-sm font-semibold leading-6  ">{`Paymaster Conditions`}</legend>
-											<div className="mt-6 space-y-6">
-													{/*select Video  */}
-													<div className="relative flex gap-x-3">
-															<div className="flex h-6 items-center">
-																	<input
-																			id="watch-video"
-																			name="watch-video"
-																			type="checkbox"
-																			checked={watchVideo}
-																			onChange={(e)=>setWatchVideo((v)=> !v)}
-																			className="h-4 w-4 rounded border-gray-300  text-black focus:ring-gray-600"
-																	/>
-															</div>
-															<div className="text-sm leading-6">
-																	<label htmlFor="watch-video" className="font-medium  text-black">
-																			Watch Video
-																	</label>
-																	<p className="text-gray-500">Watch complete Ad video to get gas fee sponsored.</p>
-															</div>
-													</div>
-													{/*Upload Video File */}
-													{watchVideo?
-													<div className="col-span-full">
-														<label htmlFor="cover-photo" className="block text-sm font-medium leading-6">
-															Upload Video
-														</label>
-														<div className="flex rounded-md shadow-sm ring-1 bg-gray-900  ring-gray-300 focus-within:ring-0 focus-within:bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 p-0.5 justify-center">
-															<div className="text-center w-full rounded-md bg-gray-900 ">
-																<PhotoIcon className="mx-auto h-12 w-12 text-gray-200" aria-hidden="true" />
-																<div className="mt-4 flex text-sm justify-center leading-6 text-gray-200">
-																	<label
-																		htmlFor="video-file-upload"
-																		className="relative cursor-pointer font-semibold text-gray-600 focus-within:outline-none "
-																	>
-																		<span
-																			className="block flex-1 text-black  outline-none focus:outline-none sm:text-sm sm:leading-6"
-																			>Upload a video 
-																		</span>
-																		<input 
-																			onChange={(e)=> setVideoFile(e.target.files?.[0])} 
-																			accept="video/mp4"
-																			id="video-file-upload" 
-																			name="video-file-upload" 
-																			type="file"
-																			className="sr-only " 
-																		/>
-																	</label>
-																	<p className="pl-2">{videoFile ? videoFile.name : 'No file selected'}</p>
-																</div>
-																<p className="text-xs leading-5 text-gray-400">MP4 up to 20MB</p>
-															</div>
-														</div>
-													</div>:<></>}
-													{/*Select question */}
-													<div className="relative flex gap-x-3">
-															<div className="flex h-6 items-center">
-																	<input
-																			id="answer-question"
-																			name="answer-question"
-																			type="checkbox"
-																			checked={answerQuestion}
-																			onChange={(e)=>setAnswerQuestion((v)=> !v)}
-																			className="h-4 w-4 rounded border-gray-300  text-black focus:ring-gray-600"
-																	/>
-															</div>
-															<div className="text-sm leading-6">
-																	<label htmlFor="answer-question" className="font-medium  text-black">
-																			Answer a question
-																	</label>
-																	<p className="text-gray-500">Answer a question related to sponsor to get gas fee sponsored.</p>
-															</div>
-													</div>
-													{/*Write question */}
-													{answerQuestion?
-													<div className="col-span-full">
-														<label htmlFor="about" className="block text-sm font-medium leading-6 ">
-															Question, Options and Answer
-														</label>
-														<div className="mt-2">
-															<div className="flex rounded-md shadow-sm ring-1 ring-gray-300 focus-within:ring-0 focus-within:bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 p-0.5 ">
-																	<textarea
-																			id="about"
-																			name="about"
-																			rows={4}
-																			className="block flex-1 border-0 bg-gray-900 py-1.5 pl-2 text-white rounded-md placeholder:text-gray-400 focus:ring-0 outline-none focus:outline-none sm:text-sm sm:leading-6"
-																			value={question}
-																			onChange={(e)=> setQuestion(e.target.value)}
-																			placeholder={`{\n\t"question":"Sample Question",\n\t"options":['a','b','c','d'],\n\t"answer":'a'\n}`}
-																	/>
-															</div>
-														</div>
-													</div> :<></>}
+									{/* Paymaster supported Chain */}
+									<div className="">
+											<label htmlFor="country" className="block text-sm font-medium leading-6 ">
+													Select paymaster chain
+											</label>
+											<div className="mt-2">
+												<Dropdown options={chains} setSelected={setSelectedChain} selected={selectedChain}  />
+											</div>
+									</div>
+									{/* Paymaster supported Application */}
+									<div className="">
+											<label htmlFor="country" className="block text-sm font-medium leading-6 ">
+													Application to Supported
+											</label>
+											<div className="mt-2">
+												<Dropdown options={applicationConfig} selected={applicationSelected} setSelected={setApplicationSelected} />
+											</div>
+									</div>
+									<div className="">
+										<legend className="text-sm font-semibold leading-6">Paymaster Criterias</legend>
+										<select
+											className="block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:ring-gray-600 focus:border-gray-600 sm:text-sm"
+											onChange={(e) => handlePaymasterCriteriaChange(e.target.value)}
+											value={selectedPaymasterCriteria?selectedPaymasterCriteria?.type:''}
+										>
+											<option value="">Select a condition</option>
+											{criterias.map((criteria) => (
+												<option key={criteria.type} value={criteria.type}>
+													{criteria.label}
+												</option>
+											))}
+										</select>
+									</div>
 
-													{/*HOLD A NFT */}
-													<div className="relative flex gap-x-3">
-															<div className="flex h-6 items-center">
-																	<input
-																			id="hold-a-nft"
-																			name="hold-a-nft"
-																			type="checkbox"
-																			checked={holdNFT}
-																			onChange={(e)=>setHoldNFT((v)=> !v)}
-																			className="h-4 w-4 rounded border-gray-300  focus:ring-gray-600"
-																	/>
-															</div>
-															
-															<div className="text-sm leading-6">
-																	<label htmlFor="hold-a-nft" className="font-medium ">
-																			Hold a NFT
-																	</label>
-																	<p className="text-gray-500">Prove you hold a NFT to get gas fee sponsored.</p>
-															</div>
-													</div>
-													{/* NFT Collection Address */}
-													{holdNFT ? 
-													<div className="sm:col-span-6">
-														<label htmlFor="name" className="block text-sm font-medium leading-6">
-																NFT Collection Address
-														</label>
-														<div className="mt-2">
-																<div className="flex rounded-md shadow-sm ring-1 bg-gray-900 ring-gray-300 focus-within:ring-0 focus-within:bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 p-0.5 sm:max-w-md">
-																		<input
-																				type="text"
-																				name="nft-collection-address"
-																				id="nft-collection-address"
-																				autoComplete="nft-collection-address"
-																				value={nftCollection}
-																				onChange={(e)=> setNFTCollection(e.target.value)}
-																				placeholder="0x"
-																				className="block flex-1 border-0 bg-gray-300 py-1.5 pl-2 text-black rounded-md placeholder:text-gray-400 focus:ring-0 outline-none focus:outline-none sm:text-sm sm:leading-6"
-																		/>
-																</div>
-														</div>
-													</div>:<></>}
-											</div>
-									</fieldset>
-									<fieldset className="sm:col-span-6" >
-											<legend className="text-sm font-semibold leading-6 ">Sybil Resistant Identity </legend>
-											<p className="mt-1 text-sm leading-6  text-gray-500">
-													Prove you are a human
-											</p>
-											<div className="mt-6 space-y-6">
-													
-													<div className="flex items-center gap-x-3">
-															<input
-																	id="worldcoin-id"
-																	name="identity"
-																	type="radio"
-																	checked={identityProvider === 'worldcoin'}
-																	onChange={(e)=>setIdentityProvider('worldcoin')}
-																	className="h-4 w-4 border-gray-300  focus:ring-gray-600"
-															/>
-															<label htmlFor="worldcoin-id" className="block text-sm font-medium leading-6 ">
-																	Worldcoin Identity
-															</label>
-													</div>
-													<div className="flex items-center gap-x-3">
-															<input
-																	id="gitcoin-passport"
-																	name="identity"
-																	type="radio"
-																	disabled
-																	onChange={(e)=>setIdentityProvider('gitcoin_passport')}
-																	className="h-4 w-4 border-gray-300  focus:ring-gray-600"
-															/>
-															<label htmlFor="gitcoin-passport" className="block text-sm font-medium leading-6 ">
-																	Gitcoin Passport (coming soon)
-															</label>
-													</div>
-													<div className="flex items-center gap-x-3">
-															<input
-																	id="poh"
-																	name="identity"
-																	type="radio"
-																	disabled
-																	onChange={(e)=>setIdentityProvider('poh')}
-																	className="h-4 w-4 border-gray-300  focus:ring-gray-600"
-															/>
-															<label htmlFor="poh" className="block text-sm font-medium leading-6 ">
-																	Proof Of Humanity (coming soon)
-															</label>
-													</div>
-											</div>
-									</fieldset>
+									{/* Render selected condition details */}
+									{selectedPaymasterCriteria.type != '' && selectedCriteriaComponent && React.createElement(selectedCriteriaComponent,{ setPaymasterCriteriaData: handlePaymasterCriteriaData, paymasterCriteriaData: selectedPaymasterCriteria.data})}
 								</div>
 								<div className="flex items-center justify-end gap-x-6 border-t border-gray-900/10  py-4 col-span-3">
 										<Button label="Back" onClick={handleBack} type={"button"} />
@@ -477,4 +461,3 @@ export default  function CreatePaymasterPage() {
 	</div>
   )
 }
-
